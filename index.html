@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podator - Vérification de Podcasts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📻 Podator</h1>
+      <p>Vérification quotidienne des flux podcast</p>
+    </header>
+
+    <div class="controls">
+      <div class="month-nav">
+        <button id="prevMonth">&larr;</button>
+        <h2 id="monthYear"></h2>
+        <button id="nextMonth">&rarr;</button>
+      </div>
+      <button id="checkNow" class="check-btn">Vérifier maintenant</button>
+    </div>
+
+    <div class="calendar-wrapper">
+      <div class="weekdays">
+        <div class="weekday">LUN</div>
+        <div class="weekday">MAR</div>
+        <div class="weekday">MER</div>
+        <div class="weekday">JEU</div>
+        <div class="weekday">VEN</div>
+        <div class="weekday">SAM</div>
+        <div class="weekday">DIM</div>
+      </div>
+      <div class="calendar" id="calendar"></div>
+    </div>
+
+    <div class="status-bar" id="statusBar"></div>
+
+    <div class="modal" id="detailModal">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModal">&times;</button>
+        <h3 id="modalDate"></h3>
+        <div id="modalDetails"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

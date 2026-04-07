@@ -23,6 +23,10 @@ class PodatorApp {
     this.setupEventListeners();
     this.renderCalendar();
     this.updateStatusBar();
+    this.updateLastCheck();
+
+    // Mettre à jour le lastCheck toutes les minutes
+    setInterval(() => this.updateLastCheck(), 60000);
   }
 
   setupEventListeners() {
@@ -50,8 +54,8 @@ class PodatorApp {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
-    document.getElementById('monthYear').textContent =
-      new Date(year, month).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    const monthName = new Date(year, month).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    document.getElementById('monthYear').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
@@ -66,6 +70,20 @@ class PodatorApp {
       const dayEl = this.createDayElement(current);
       calendar.appendChild(dayEl);
       current.setDate(current.getDate() + 1);
+    }
+
+    this.updateStats();
+  }
+
+  updateStats() {
+    const today = this.formatDate(new Date());
+    const data = history[today];
+    const errorsEl = document.getElementById('todayErrors');
+
+    if (!data) {
+      errorsEl.textContent = '—';
+    } else {
+      errorsEl.textContent = data.errors.length;
     }
   }
 
@@ -138,14 +156,46 @@ class PodatorApp {
 
     history[today] = results;
     localStorage.setItem('podatorHistory', JSON.stringify(history));
+    localStorage.setItem('lastCheckTime', new Date().toISOString());
 
     this.renderCalendar();
     this.updateStatusBar();
+    this.updateLastCheck();
     this.showDetails(today);
 
     btn.disabled = false;
     btn.classList.remove('loading');
     btn.textContent = 'Vérifier maintenant';
+  }
+
+  updateLastCheck() {
+    const lastCheckTime = localStorage.getItem('lastCheckTime');
+    const lastCheckEl = document.getElementById('lastCheck');
+
+    if (!lastCheckTime) {
+      lastCheckEl.textContent = '';
+      return;
+    }
+
+    const date = new Date(lastCheckTime);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    let text = '';
+    if (diffMins < 1) {
+      text = 'À l\'instant';
+    } else if (diffMins < 60) {
+      text = `Il y a ${diffMins}m`;
+    } else if (diffHours < 24) {
+      text = `Il y a ${diffHours}h`;
+    } else {
+      text = `Il y a ${diffDays}j`;
+    }
+
+    lastCheckEl.textContent = text;
   }
 
   async checkPodcast(podcast) {

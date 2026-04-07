@@ -6,69 +6,88 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #fafafa;
-  color: #333;
-  padding: 20px;
+  background: #ffffff;
+  color: #1a1a1a;
+  padding: 40px 20px;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 950px;
   margin: 0 auto;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 40px;
+/* Top Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 48px;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-header h1 {
-  font-size: 2.5em;
-  margin-bottom: 8px;
-  color: #1a1a1a;
+.month-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
-header p {
-  font-size: 0.95em;
+.month-header h1 {
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: #000;
+  min-width: 200px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
   color: #666;
+  padding: 4px 8px;
+  transition: color 0.2s;
 }
 
-.controls {
+.nav-btn:hover {
+  color: #000;
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.stat-item {
+  text-align: right;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Action Bar */
+.action-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.month-nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex: 1;
-  min-width: 250px;
-}
-
-.month-nav button {
-  background: white;
-  border: 1px solid #ddd;
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 0.95em;
-  transition: all 0.2s;
-}
-
-.month-nav button:hover {
-  background: #f5f5f5;
-  border-color: #999;
-}
-
-#monthYear {
-  font-size: 1.3em;
-  min-width: 200px;
-  text-align: center;
-  color: #1a1a1a;
+  margin-bottom: 36px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .check-btn {
@@ -79,129 +98,142 @@ header p {
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  font-size: 0.9rem;
   transition: all 0.2s;
-  font-size: 0.95em;
 }
 
 .check-btn:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
 .check-btn.loading {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
+.last-check {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Calendar */
 .calendar-wrapper {
-  background: white;
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 0;
+  margin-bottom: 8px;
 }
 
 .weekday {
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
   color: #666;
-  font-size: 0.85em;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
+  font-size: 0.75rem;
+  padding: 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+  gap: 0;
 }
 
 .day {
   aspect-ratio: 1;
-  border: 1px solid #eee;
-  border-radius: 4px;
+  border: 1px solid #f0f0f0;
+  border-right: none;
+  border-bottom: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 8px;
+  padding: 12px;
   text-align: center;
-  transition: all 0.2s;
+  transition: all 0.15s;
   background: white;
   position: relative;
   font-weight: 500;
 }
 
+.day:nth-child(7n) {
+  border-right: 1px solid #f0f0f0;
+}
+
+.day:nth-child(n+36) {
+  border-bottom: 1px solid #f0f0f0;
+}
+
 .day:hover {
-  border-color: #2563eb;
-  background: #f0f7ff;
+  background: #fafafa;
 }
 
 .day.other-month {
-  color: #ccc;
+  color: #e0e0e0;
   cursor: default;
   background: #fafafa;
 }
 
 .day.other-month:hover {
-  border-color: #eee;
   background: #fafafa;
 }
 
 .day.today {
-  background: #e0e7ff;
-  border-color: #2563eb;
+  background: #f0f7ff;
 }
 
 .day.has-errors {
-  background: #fee2e2;
-  border-color: #dc2626;
-}
-
-.day.has-errors:hover {
-  background: #fecaca;
+  background: #fef2f2;
 }
 
 .day-number {
-  font-weight: 600;
-  font-size: 0.95em;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
 }
 
 .day-badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #dc2626;
   color: white;
-  font-size: 0.7em;
+  font-size: 0.65rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
 }
 
 .day-summary {
-  font-size: 0.7em;
-  color: #666;
+  font-size: 0.65rem;
+  color: #999;
   margin-top: 2px;
 }
 
+/* Status Bar */
 .status-bar {
-  margin-top: 30px;
-  padding: 15px 20px;
-  background: white;
+  margin-top: 36px;
+  padding: 16px 20px;
+  background: #f8f8f8;
   border-radius: 4px;
   border-left: 4px solid #2563eb;
-  font-size: 0.95em;
+  font-size: 0.9rem;
   color: #666;
 }
 
@@ -217,6 +249,7 @@ header p {
   color: #991b1b;
 }
 
+/* Modal */
 .modal {
   display: none;
   position: fixed;
@@ -224,10 +257,11 @@ header p {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 100;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .modal.open {
@@ -237,29 +271,30 @@ header p {
 .modal-content {
   background: white;
   border-radius: 8px;
-  padding: 30px;
+  padding: 32px;
   max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 20px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
 }
 
 .modal-close {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 16px;
+  right: 16px;
   background: none;
   border: none;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   cursor: pointer;
   color: #999;
   padding: 0;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.2s;
 }
 
 .modal-close:hover {
@@ -267,18 +302,19 @@ header p {
 }
 
 #modalDate {
-  font-size: 1.3em;
-  margin-bottom: 20px;
-  color: #1a1a1a;
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  color: #000;
+  font-weight: 500;
 }
 
 .detail-section {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .detail-section h4 {
-  font-size: 0.95em;
-  color: #666;
+  font-size: 0.75rem;
+  color: #999;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 12px;
@@ -286,12 +322,12 @@ header p {
 }
 
 .result-item {
-  padding: 12px;
+  padding: 12px 14px;
   margin-bottom: 8px;
   border-radius: 4px;
   border-left: 3px solid #16a34a;
   background: #f0fdf4;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   color: #15803d;
 }
 
@@ -307,7 +343,7 @@ header p {
 }
 
 .result-item-info {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   opacity: 0.85;
 }
 
@@ -318,36 +354,43 @@ header p {
 }
 
 .empty-state-icon {
-  font-size: 3em;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  margin-bottom: 12px;
 }
 
 @media (max-width: 768px) {
-  header h1 {
-    font-size: 1.8em;
+  body {
+    padding: 20px 16px;
   }
 
-  .controls {
+  .top-bar {
     flex-direction: column;
+    margin-bottom: 32px;
+    gap: 24px;
   }
 
-  .month-nav {
-    justify-content: center;
+  .month-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .stats {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .day {
-    font-size: 0.85em;
+    font-size: 0.8rem;
   }
 
   .day-number {
-    font-size: 0.85em;
+    font-size: 0.85rem;
   }
 
   .day-summary {
-    font-size: 0.6em;
+    font-size: 0.6rem;
   }
 
-  .calendar-wrapper {
-    padding: 15px;
+  .modal-content {
+    padding: 24px;
   }
 }

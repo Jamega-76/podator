@@ -288,8 +288,11 @@ export default function App() {
 
     for (const podcast of PODCASTS) {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         const url = CORS_PROXY + encodeURIComponent(podcast.url);
-        const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
         const xml = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(xml, 'application/xml');
